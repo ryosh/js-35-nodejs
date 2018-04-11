@@ -4,4 +4,7 @@ function ProdutoDao(connection) {
 ProdutoDao.prototype.lista = function (callback) {
     this._connection.query('SELECT * FROM livros', callback);
 };
-module.exports = ProdutoDao;
+
+module.exports = function () {
+    return ProdutoDao;
+};
