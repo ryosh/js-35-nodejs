@@ -1,9 +1,30 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<title>Casa	do	código</title>
-	</head>
-	<body>
-		<h1>Aqui listaremos os produtos</h1>
-	</body>
-</html>
+<% include ../includes/header.ejs %>
+    <!-- FINAL NAV -->
+    <div>
+        <div class ="container min-container">
+            <h2 class="basic-title">Listagem de livros</h2>
+            <div class="well">
+                <table class="table table-condensed table-bordered table-striped table-hover">
+                    <thead>
+                    <tr>
+                        <td><a href="">Título</a></td>
+                        <td><a href="">Preço</a></td>
+                        <td><a href="">Descrição</a></td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!-- 1 passo: montar ejs e executar, com o erro, voltar para o render do produtos.js e ajustar a função --> 
+                    <% for(var i=0; i<lista.length; i++) {%>
+                        <tr>
+                            <td><%= lista[i].titulo %></td>
+                            <td><%= lista[i].preco %></td>
+                            <td><p><%= lista[i].descricao%></p></td>
+                        </tr>
+                    <% } %>
+                    </tbody>
+                </table>
+                <a href="/produtos/form" class="btn btn-success"><span class="glyphicon glyphicon-plus-sign"></span> Novo livro</a>
+            </div>
+        </div>
+    </div>
+<% include ../includes/footer.ejs %>
