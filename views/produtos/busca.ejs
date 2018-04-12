@@ -1,0 +1,31 @@
+<% include ../includes/header.ejs %>
+
+<div>
+    <div class="container min-container">
+        <h2 class="basic-title">Busca</h2>
+        <form class="well" role="form">
+            <div class="form-group">
+                <label for="titulo">Titulo</label>
+                <div class="input-group">
+                    <input type="text" name="titulo" placeholder="titulo do livro" value="<%= produto.titulo %>" disabled>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="preco">Preço</label>
+                <div class="input-group">
+                    <input type="text" name="preco" placeholder="valor do livro" value="<%= produto.preco %>" disabled>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="descricao">Descricao</label>
+                <div class="input-group">
+                    <textarea name="descricao" disabled>
+                        <%= produto.descricao %>
+                    </textarea>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<% include ../includes/footer.ejs %>
