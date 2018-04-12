@@ -1,14 +1,19 @@
 module.exports = function (app) {
     app.get('/produtos', function (req, res) {
         const connection = app.infra.connectionFactory();
-        const produtoDao = new app.infra.ProdutoDao(connection);
-
-        produtoDao.lista(function (error, results, fields) {
-            res.render('produtos/lista', {
-                lista: results
+        const produtos = new app.infra.ProdutoDao(connection);
+        produtos.lista(function (error, results, fields) {
+            res.format({
+                html: function () {
+                    res.render('produtos/lista', {
+                        lista: results
+                    });
+                },
+                json: function () {
+                    res.json(results);
+                }
             });
         });
-
         connection.end();
     });
 
