@@ -12,7 +12,5 @@ module.exports = function () {
         .then('infra')
         .into(app);
 
-    require('./routes/produtos')(app);
-
     return app;
 };
