@@ -1,5 +1,13 @@
 <% include ../includes/header.ejs %>
 
+<% if(locals.validationErrors){ %>
+    <ul class="list-unstyled">
+        <% for(let i=0; i < validationErrors.length; i++) {%>
+            <li class="alert alert-danger"> <%= validationErrors[i].msg %>
+        <% } %>
+    </ul>
+<% } %>
+    
 <form action="/produtos" method="post" class="well" role="form">
     <div class="form-group">
         <label for="titulo">Título</label>
