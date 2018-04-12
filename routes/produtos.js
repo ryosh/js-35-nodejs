@@ -21,7 +21,7 @@ module.exports = function (app) {
         const connection = app.infra.connectionFactory();
         const produtos = new app.infra.ProdutoDao(connection);
         produtos.salva(livro, function (exception, result) {
-            res.render('produtos/salvo');
+            res.redirect('/produtos');
         });
     });
 }
