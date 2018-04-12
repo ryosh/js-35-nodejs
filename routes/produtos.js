@@ -48,4 +48,23 @@ module.exports = function (app) {
             res.redirect('/produtos');
         });
     });
+
+    app.get('/produtos/:id', function (req, res) {
+        const id = req.params.id;
+        const connection = app.infra.connectionFactory();
+        const produtos = new app.infra.ProdutoDao(connection);
+        produtos.obtem(id, function (error, result) {
+            res.format({
+                html: function () {
+                    res.render('produtos/busca', {
+                        produto: result[0]
+                    });
+                },
+                json: function () {
+                    res.json(result);
+                }
+            });
+        });
+        connection.end();
+    });
 }
