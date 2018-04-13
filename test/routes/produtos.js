@@ -1,6 +1,18 @@
 const express = require('../../custom-express')();
 const request = require('supertest')(express);
+const DatabaseCleaner = require('database-cleaner');
+
 describe('#ProdutosController', function () {
+
+    beforeEach(function (done) {
+        const databaseCleaner = new DatabaseCleaner('mysql');
+        databaseCleaner.clean(express.infra.connectionFactory(), done);
+    });
+    after(function (done) {
+        const databaseCleaner = new DatabaseCleaner('mysql');
+        databaseCleaner.clean(express.infra.connectionFactory(), done);
+    });
+
     it('listagem de produtos json', function (done) {
         request.get('/produtos')
             .set('Accept', 'application/json')
