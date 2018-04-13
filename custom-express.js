@@ -7,8 +7,10 @@ module.exports = function () {
     const app = express();
 
     app.use(express.static('./public'));
-    app.use(bodyParser.urlencoded());
-    
+    app.use(bodyParser.urlencoded({
+        extended: true
+    }));
+
     app.use(bodyParser.json());
     // curl -X POST -H "Content-Type:application/json" -d '{"titulo":"novo","preco":150,"descricao":"descricao do livro"}' 'http://localhost:3000/produtos'
 
