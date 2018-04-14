@@ -1,16 +1,29 @@
-const mongodb = require('mongodb');
-const MongoClient = mongodb.MongoClient;
+const mongoose = require('mongoose');
 
-function createConnection(callback) {
-    MongoClient.connect('mongodb://localhost/casadocodigo', function (err, client) {
-        if (err) {
-            console.error('Erro ao conectar ao MongoDB');
-            return;
-        }
-        const db = client.db('casadocodigo');
-        callback(client, db);
-    });
+mongoose.connect('mongodb://localhost/casadocodigo');
+
+const LivroSchema = new mongoose.Schema({
+    titulo: {
+        type: String,
+        required: true,
+        trim: true
+    },
+    preco: {
+        type: Number,
+        min: 0
+    },
+    descricao: {
+        type: String,
+        trim: true
+    }
+});
+
+const model = mongoose.model('Livro', LivroSchema);
+
+function createConnection() {
+    return model;
 }
+
 module.exports = function () {
     return createConnection;
 }

@@ -1,20 +1,22 @@
-const mongodb = require('mongodb')
-const ObjectID = mongodb.ObjectID;
+function ProdutoDao(model) {
+    this._model = model;
+}
 
-function ProdutoDao(db) {
-    this._db = db;
-};
 ProdutoDao.prototype.lista = function (callback) {
-    this._db.collection('livros').find().toArray(callback);
-};
+    this._model.find(callback);
+}
+
 ProdutoDao.prototype.salva = function (livro, callback) {
-    this._db.collection('livros').insert(livro, callback);
-};
+    const livroModel = new this._model(livro);
+    livroModel.save(callback);
+}
 
 ProdutoDao.prototype.obtem = function (id, callback) {
-    this._db.collection('livros').find({ _id: new ObjectID(id) }).toArray(callback);
+    this._model.find({
+        _id: id
+    }, callback);
 };
 
 module.exports = function () {
     return ProdutoDao;
-};
+}
