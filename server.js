@@ -4,7 +4,7 @@ const io = require('socket.io')(http);
 
 app.set('io', io);
 
-const server = http.listen(3000, function () {
+const server = http.listen(process.env.PORT || 3000, function(){
     const host = server.address().address;
     const port = server.address().port;
     console.log('Servidor executando em http://%s:%s',

@@ -3,11 +3,10 @@ CREATE DATABASE casadocodigo;
 USE casadocodigo;
 
 CREATE TABLE livros (
-        id INT(11) NOT NULL AUTO_INCREMENT,
-        titulo VARCHAR(255) DEFAULT NULL,
-        descricao TEXT,
-        preco DECIMAL(10,2) DEFAULT NULL,
-        PRIMARY KEY (id)
+        id int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+        titulo varchar(255) DEFAULT NULL,
+        descricao text,
+        preco decimal(10,2) DEFAULT NULL
 );
 
 INSERT INTO livros(titulo,descricao,preco)
