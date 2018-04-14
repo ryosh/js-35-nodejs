@@ -1,12 +1,13 @@
 module.exports = function (app) {
     app.get('/', function (req, res) {
-        const connection = app.infra.connectionFactory();
-        const produtos = new app.infra.ProdutoDao(connection);
-        produtos.lista(function (error, results, fields) {
-            res.render('home/index', {
-                livros: results
+        app.infra.connectionFactory(function (client, db) {
+            const produtos = new app.infra.ProdutoDao(db);
+            produtos.lista(function (err, results) {
+                res.render('home/index', {
+                    livros: results
+                });
             });
+            client.close();
         });
-        connection.end();
     });
 }

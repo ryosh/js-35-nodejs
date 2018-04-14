@@ -1,20 +1,21 @@
 module.exports = function (app) {
     app.get('/produtos', function (req, res) {
-        const connection = app.infra.connectionFactory();
-        const produtos = new app.infra.ProdutoDao(connection);
-        produtos.lista(function (error, results, fields) {
-            res.format({
-                html: function () {
-                    res.render('produtos/lista', {
-                        lista: results
-                    });
-                },
-                json: function () {
-                    res.json(results);
-                }
+        app.infra.connectionFactory(function (client, db) {
+            const produtoDao = new app.infra.ProdutoDao(db);
+            produtoDao.lista(function (err, results) {
+                res.format({
+                    html: function () {
+                        res.render('produtos/lista', {
+                            lista: results
+                        });
+                    },
+                    json: function () {
+                        res.json(results);
+                    }
+                });
             });
+            client.close();
         });
-        connection.end();
     });
 
     app.get('/produtos/form', function (req, res) {
@@ -42,29 +43,12 @@ module.exports = function (app) {
             return;
         }
 
-        const connection = app.infra.connectionFactory();
-        const produtos = new app.infra.ProdutoDao(connection);
-        produtos.salva(livro, function (exception, result) {
-            res.redirect('/produtos');
-        });
-    });
-
-    app.get('/produtos/:id', function (req, res) {
-        const id = req.params.id;
-        const connection = app.infra.connectionFactory();
-        const produtos = new app.infra.ProdutoDao(connection);
-        produtos.obtem(id, function (error, result) {
-            res.format({
-                html: function () {
-                    res.render('produtos/busca', {
-                        produto: result[0]
-                    });
-                },
-                json: function () {
-                    res.json(result);
-                }
+        app.infra.connectionFactory(function (client, db) {
+            const produtoDao = new app.infra.ProdutoDao(db);
+            produtoDao.salva(livro, function (err, result) {
+                res.redirect('/produtos');
             });
+            client.close();
         });
-        connection.end();
     });
 }

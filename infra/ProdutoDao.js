@@ -1,16 +1,11 @@
-function ProdutoDao(connection) {
-    this._connection = connection;
+function ProdutoDao(db) {
+    this._db = db;
 };
 ProdutoDao.prototype.lista = function (callback) {
-    this._connection.query('SELECT * FROM livros', callback);
+    this._db.collection('livros').find().toArray(callback);
 };
-
 ProdutoDao.prototype.salva = function (livro, callback) {
-    this._connection.query('insert into livros SET ?', livro, callback);
-};
-
-ProdutoDao.prototype.obtem = function (id, callback) {
-    this._connection.query('SELECT * FROM livros WHERE id = ?', [id], callback);
+    this._db.collection('livros').insert(livro, callback);
 };
 
 module.exports = function () {

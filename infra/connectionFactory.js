@@ -1,19 +1,16 @@
-var mysql = require('mysql');
+const mongodb = require('mongodb');
+const MongoClient = mongodb.MongoClient;
 
-let databaseName = 'casadocodigo';
-if (process.env.NODE_ENV == 'test') {
-    databaseName = 'casadocodigo_teste';
-}
-
-function createDBConnection() {
-    return mysql.createConnection({
-        host: 'localhost',
-        user: 'root',
-        password: '',
-        database: databaseName
+function createConnection(callback) {
+    MongoClient.connect('mongodb://localhost/casadocodigo', function (err, client) {
+        if (err) {
+            console.error('Erro ao conectar ao MongoDB');
+            return;
+        }
+        const db = client.db('casadocodigo');
+        callback(client, db);
     });
 }
-
 module.exports = function () {
-    return createDBConnection;
+    return createConnection;
 }
