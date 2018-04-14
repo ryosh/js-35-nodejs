@@ -22,5 +22,38 @@ module.exports = function () {
         .then('infra')
         .into(app);
 
+    app.use(function (error, req, res, next) {
+        console.error('Erro no middleware');
+        console.error(error);
+        // res.status(500).render('erros/500');
+        res.format({
+            html: function () {
+                res.status(500).render("erros/500");
+            },
+            json: function () {
+                res.status(500);
+                res.json({
+                    'erro500': 'erro interno do servidor'
+                });
+            }
+        });
+    });
+
+    app.use(function (req, res, next) {
+        console.log('Recurso não encontrado: ' + req.originalUrl);
+        // res.status(404).render("erros/404");
+        res.format({
+            html: function () {
+                res.status(404).render("erros/404");
+            },
+            json: function () {
+                res.status(404);
+                res.json({
+                    'erro404': 'recurso não encontrado'
+                });
+            }
+        });
+    });
+
     return app;
 };
