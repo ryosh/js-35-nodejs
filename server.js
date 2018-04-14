@@ -10,3 +10,5 @@ const server = http.listen(process.env.PORT || 3000, function(){
     console.log('Servidor executando em http://%s:%s',
         host, port);
 });
+
+// https://casadocodigo-tlpp-2018.herokuapp.com/produtos
