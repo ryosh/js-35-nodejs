@@ -24,4 +24,13 @@
     </li>
 <%}%>
 
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    const socket = io();
+    socket.on('novaPromocao', function (data) {
+        console.log('Nova promoção');
+        console.log(data);
+    });
+</script>
+
 <% include ../includes/footer.ejs %>
