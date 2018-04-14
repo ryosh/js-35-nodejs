@@ -3,6 +3,7 @@ module.exports = function (app) {
         app.infra.connectionFactory(function (client, db) {
             const produtoDao = new app.infra.ProdutoDao(db);
             produtoDao.lista(function (err, results) {
+                console.log(results);
                 res.format({
                     html: function () {
                         res.render('produtos/lista', {
@@ -47,6 +48,26 @@ module.exports = function (app) {
             const produtoDao = new app.infra.ProdutoDao(db);
             produtoDao.salva(livro, function (err, result) {
                 res.redirect('/produtos');
+            });
+            client.close();
+        });
+    });
+
+    app.get('/produtos/:id', function (req, res) {
+        const id = req.params.id;
+        app.infra.connectionFactory(function (client, db) {
+            const produtos = new app.infra.ProdutoDao(db);
+            produtos.obtem(id, function (error, result) {
+                res.format({
+                    html: function () {
+                        res.render('produtos/busca', {
+                            produto: result[0]
+                        });
+                    },
+                    json: function () {
+                        res.json(result);
+                    }
+                });
             });
             client.close();
         });
